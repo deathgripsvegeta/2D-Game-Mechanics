@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float Speed = 10;
+    public GameObject PlayerFx;
+    public GameObject EnemyFx;
     private Rigidbody2D _playerRb;
 
     // Start is called before the first frame update
@@ -21,5 +23,13 @@ public class PlayerController : MonoBehaviour
 
         Vector2 direction = new Vector2(horizontalInput, verticalInput);
         _playerRb.AddForce(direction * Speed);
+    }
+     private void OnTriggerEnter2D(Collider2D other) 
+    {
+        if(other.gameObject.CompareTag("Wall"))
+        {
+            Instantiate(PlayerFx, other.transform.position, PlayerFx.transform.rotation);
+            Destroy(other.gameObject);
+        }
     }
 }
