@@ -1011,7 +1011,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 10
-  PlayerFx: {fileID: 0}
+  ExplosionEffects: {fileID: 9206526582139864691, guid: 7c84346b6ec36dd44a7c4b59967b4c9d, type: 3}
   EnemyFx: {fileID: 0}
 --- !u!212 &1382611577
 SpriteRenderer:

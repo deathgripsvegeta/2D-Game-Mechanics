@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float Speed = 1;
+    public GameObject ExplosionEffects;
 
     private Rigidbody2D _enemyRb;
     private GameObject _player;
@@ -22,5 +23,13 @@ public class Enemy : MonoBehaviour
         Vector2 lookDirection = (_player.transform.position - transform.position).normalized;
 
         _enemyRb.AddForce(lookDirection * Speed);
+    }
+     private void OnTriggerEnter2D(Collider2D other) 
+    {
+        if(other.gameObject.CompareTag("Wall"))
+        {
+            Instantiate(ExplosionEffects, transform.position, ExplosionEffects.transform.rotation);
+            Destroy(this.gameObject);
+        }
     }
 }

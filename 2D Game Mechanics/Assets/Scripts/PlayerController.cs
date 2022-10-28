@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float Speed = 10;
-    public GameObject PlayerFx;
+    public GameObject ExplosionEffects;
     public GameObject EnemyFx;
     private Rigidbody2D _playerRb;
 
@@ -28,8 +28,8 @@ public class PlayerController : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Wall"))
         {
-            Instantiate(PlayerFx, other.transform.position, PlayerFx.transform.rotation);
-            Destroy(other.gameObject);
+            Instantiate(ExplosionEffects, transform.position, ExplosionEffects.transform.rotation);
+            Destroy(this.gameObject);
         }
     }
 }
