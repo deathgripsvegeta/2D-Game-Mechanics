@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     public GameObject EnemyPrefab;
+    public GameObject PowerupPrefab;
     public float XRange = 6.27f;
     public float YRange = 3.11f;
     public int EnemyCount;
