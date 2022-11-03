@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public float Speed = 10;
+    public float PowerupStrength = 3000;
     public GameObject ExplosionEffects;
     public GameObject EnemyFx;
     public GameObject PowerupIndicator;
@@ -42,6 +43,17 @@ public class PlayerController : MonoBehaviour
             PowerupIndicator.gameObject.SetActive(true);
             HasPowerup = true;
             StartCoroutine(PowerupCountdownRoutine());
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if(other.gameObject.CompareTag("Enemy") && HasPowerup) // or if(other.gameObject.CompareTag("Enemy") && HasPowerup == true)
+        {
+            Rigidbody2D enemyRB = other.gameObject.GetComponent<Rigidbody2D>();
+            Vector2 awayFromPlayer = (other.gameObject.transform.position - transform.position); //or this.gameObject.transform.position
+            enemyRB.AddForce(awayFromPlayer * PowerupStrength, ForceMode2D.Impulse);
+            PowerupIndicator.gameObject.SetActive(false);
+            HasPowerup = false;
         }
     }
     IEnumerator PowerupCountdownRoutine()
