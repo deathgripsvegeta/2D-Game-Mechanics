@@ -6,17 +6,19 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public float Speed = 10;
-    public float PowerupStrength = 3000;
+    public float PowerupStrength = 10;
     public GameObject ExplosionEffects;
     public GameObject EnemyFx;
     public GameObject PowerupIndicator;
     public bool HasPowerup = false;
     private Rigidbody2D _playerRb;
+    private SpriteRenderer _playerSR;
 
     // Start is called before the first frame update
     void Start()
     {
         _playerRb = GetComponent<Rigidbody2D>();
+        _playerSR = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -32,10 +34,8 @@ public class PlayerController : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Wall"))
         {
-            Instantiate(ExplosionEffects, transform.position, ExplosionEffects.transform.rotation);
-            Destroy(this.gameObject);
-            gameObject.SetActive(false);
-            SceneManager.LoadScene(0);
+           StartCoroutine(GameOverRoutine());
+           
         }
         if(other.gameObject.CompareTag("Powerup"))
         {
@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
             HasPowerup = true;
             StartCoroutine(PowerupCountdownRoutine());
         }
+
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -62,5 +63,14 @@ public class PlayerController : MonoBehaviour
         PowerupIndicator.gameObject.SetActive(false);
         HasPowerup = false;
         
+    }
+    IEnumerator GameOverRoutine()
+    {
+        Instantiate(ExplosionEffects, transform.position, ExplosionEffects.transform.rotation);
+        PowerupIndicator.gameObject.SetActive(false);
+        HasPowerup = false;
+        _playerSR.enabled = false;
+        yield return new WaitForSeconds(1.1f);
+        SceneManager.LoadScene(0);
     }
 }
